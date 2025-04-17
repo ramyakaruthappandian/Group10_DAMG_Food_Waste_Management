@@ -1,0 +1,1 @@
+GRANT SELECT, UPDATE ON food_admin.govt_food_view TO govt_user;
