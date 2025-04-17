@@ -29,5 +29,9 @@ VALUES (user_details_seq.NEXTVAL, 'logistics_user', 'pass4', 'Dave', 'Logistics'
 INSERT INTO user_details (user_id, user_name, password, first_name, last_name, address, contact_number, user_role_role_id)
 VALUES (user_details_seq.NEXTVAL, 'default_gov_user', 'default_pass', 'Default', 'Gov', 'Govt Address', 1234567890, 
         (SELECT role_id FROM user_role WHERE role_name = 'GOVT_OFFICIAL'));
+INSERT INTO user_details (user_id, user_name, password, first_name, last_name, address, contact_number, user_role_role_id)
+VALUES (user_details_seq.NEXTVAL, 'supplier_user2', 'Passw0rd$1234', 'Alice', 'Supplier', '123 Supplier St', 1234567890, 1);
 
+INSERT INTO user_details (user_id, user_name, password, first_name, last_name, address, contact_number, user_role_role_id)
+VALUES (user_details_seq.NEXTVAL, 'supplier_user3', 'Passw0rd$1234', 'Alice', 'Supplier', '123 Supplier St', 1234567890, 1);
 COMMIT;
