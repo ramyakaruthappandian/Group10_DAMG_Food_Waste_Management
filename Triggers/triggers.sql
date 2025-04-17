@@ -51,23 +51,30 @@ BEGIN
 END;
 /
 
-CREATE OR REPLACE TRIGGER check_quantity_before_request
+CREATE OR REPLACE TRIGGER check_quantity_before_request 
 BEFORE INSERT ON ngo_request
 FOR EACH ROW
 DECLARE
   v_available NUMBER;
 BEGIN
-  -- Retrieve the current total_quantity for the main_id
+  -- Try fetching available quantity
   SELECT total_quantity
-    INTO v_available
-    FROM main_food_data
-   WHERE main_id = :NEW.main_id;
+  INTO v_available
+  FROM main_food_data
+  WHERE main_id = :NEW.main_id;
 
+  -- If requested quantity > available, raise error
   IF :NEW.req_quantity > v_available THEN
     raise_application_error(-20000, 'Requested quantity exceeds available stock.');
   END IF;
+
+EXCEPTION
+  WHEN NO_DATA_FOUND THEN
+    raise_application_error(-20001, 'Invalid MAIN_ID: No matching stock available.');
 END;
 /
+
+
 
 --logistics 
 CREATE OR REPLACE TRIGGER logistic_after_delivery
